@@ -17,6 +17,7 @@ export type Project = {
     challenges?: string[];
     learnings?: string[];
     engineering?: EngineeringDecision[];
+    architecture?: ArchitectureNode[]
 };
 
 export type EngineeringDecision = {
@@ -26,6 +27,11 @@ export type EngineeringDecision = {
     approach: string;
     validation: string[];
     lessons: string[];
+};
+export type ArchitectureNode = {
+    id: string;
+    title: string;
+    description: string;
 };
 
 export const projects: Project[] = [
@@ -152,6 +158,39 @@ export const projects: Project[] = [
                     "Rule interactions and edge cases are important when recommendations depend on time.",
                     "Clear explanations help users understand why a task was recommended.",
                 ],
+            },
+        ],
+
+        architecture: [
+            {
+                id: "ui",
+                title: "React Native UI",
+                description:
+                    "Expo Router screens and reusable task and routine components.",
+            },
+            {
+                id: "state",
+                title: "Application State",
+                description:
+                    "Task and routine contexts manage application data and lifecycle transitions.",
+            },
+            {
+                id: "engine",
+                title: "Recommendation Engine",
+                description:
+                    "TypeScript functions evaluate task eligibility and calculate recommendation scores.",
+            },
+            {
+                id: "storage",
+                title: "AsyncStorage",
+                description:
+                    "Persists application data locally between sessions.",
+            },
+            {
+                id: "notifications",
+                title: "Expo Notifications",
+                description:
+                    "Schedules reminders and supports notification-driven navigation.",
             },
         ],
     },

@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import type { Project } from "@/data/projects";
 import EngineeringSection from "./engineering-section";
+import ArchitectureDiagram from "./architecture-diagram";
 
 type ProjectCaseStudyProps = {
     project: Project;
@@ -234,6 +235,7 @@ export default function ProjectCaseStudy({
                             </div>
                         </section>
                     )}
+
                 {project.engineering?.map((decision, index) => (
                     <EngineeringSection
                         key={decision.title}
@@ -241,6 +243,12 @@ export default function ProjectCaseStudy({
                         index={index + 1}
                     />
                 ))}
+                {project.architecture && (
+                    <ArchitectureDiagram
+                        title={`${project.title} Architecture`}
+                        nodes={project.architecture}
+                    />
+                )}
                 {/* Bottom navigation */}
                 <div className="mt-12 border-t border-[#C9C1B4] pt-10">
                     <Link
