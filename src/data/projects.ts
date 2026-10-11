@@ -6,7 +6,7 @@ export type Project = {
     description: string;
     technologies: string[];
     image?: string;
-
+    featured?: boolean
 
     // Detailed case-study information
     overview?: string;
@@ -32,6 +32,7 @@ export type ArchitectureNode = {
     id: string;
     title: string;
     description: string;
+    category: string
 };
 
 export const projects: Project[] = [
@@ -50,8 +51,8 @@ export const projects: Project[] = [
             "PostgreSQL",
             "Redis",
         ],
-
-        overview:
+        featured: true,
+        overview:   
             "Kompra is a business management ecosystem designed to connect retail operations, inventory management, supplier procurement, and wholesale commerce.",
 
         problem:
@@ -167,30 +168,36 @@ export const projects: Project[] = [
                 title: "React Native UI",
                 description:
                     "Expo Router screens and reusable task and routine components.",
+
+                category: "Presentation"
             },
             {
                 id: "state",
                 title: "Application State",
                 description:
                     "Task and routine contexts manage application data and lifecycle transitions.",
+                category: "State Management"
             },
             {
                 id: "engine",
                 title: "Recommendation Engine",
                 description:
                     "TypeScript functions evaluate task eligibility and calculate recommendation scores.",
+                category: "Business Logic"
             },
             {
                 id: "storage",
                 title: "AsyncStorage",
                 description:
                     "Persists application data locally between sessions.",
+                category: "Persistence"
             },
             {
                 id: "notifications",
                 title: "Expo Notifications",
                 description:
                     "Schedules reminders and supports notification-driven navigation.",
+                category: "Platform Integration"
             },
         ],
     },
@@ -280,7 +287,8 @@ export const projects: Project[] = [
             "Managing interactions between user input and application behavior.",
             "Maintaining readable code while implementing multiple interface features.",
         ],
-
+        featured: true,
+        
         learnings: [
             "How JavaScript can be used to implement interactive web application functionality.",
             "The importance of clear user interfaces when collecting structured information.",

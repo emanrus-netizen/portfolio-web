@@ -11,6 +11,7 @@ type ProjectCardProps = {
   description: string;
   technologies: string[];
   image?: string;
+  featured?: boolean;
 };
 
 export default function ProjectCard({
@@ -22,9 +23,10 @@ export default function ProjectCard({
   description,
   technologies,
   image,
+  featured
 }: ProjectCardProps) {
   return (
-    <article className="group min-w-0 border-b border-[#C9C1B4] pb-10">
+    <article className={`group min-w-0 border-b border-[#C9C1B4] pb-10 `}>
       {/* Project image */}
       <div className="relative mb-6 aspect-[16/10] overflow-hidden bg-[#DED7CA]">
         {image ? (
@@ -32,7 +34,11 @@ export default function ProjectCard({
             src={image}
             alt={`${title} application screenshot`}
             fill
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes={
+              featured
+                ? "(max-width: 767px) 100vw, 66vw"
+                : "(max-width: 767px) 100vw, 33vw"
+            }
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (

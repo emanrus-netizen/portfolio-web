@@ -1,6 +1,8 @@
 
+import EditorialSection from "./editorial-section";
 import ProjectCard from "./project-card";
 import { projects } from "@/data/projects";
+import SectionHeading from "./section-heading";
 
 
 export default function Projects() {
@@ -11,22 +13,9 @@ export default function Projects() {
         >
             <div className="mx-auto max-w-7xl">
                 {/* Editorial section label */}
-                <div className="flex items-center justify-between border-b border-[#C9C1B4] pb-4">
-                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#AD583B]">
-                        02 / Selected Work
-                    </span>
-
-                    <span className="hidden font-mono text-xs text-[#6B665E] sm:block">
-                        04 Featured Projects
-                    </span>
-                </div>
-
+                { }
                 {/* Section introduction */}
-                <div className="grid gap-6 py-12 md:grid-cols-2 md:items-end">
-                    <h2 className="max-w-xl font-serif text-5xl leading-[1.05] tracking-tight text-[#1B1B19] md:text-7xl">
-                        Things I've built and explored.
-                    </h2>
-
+                <SectionHeading label=" 02 / Selected Work" title="Things I've built and explored.">
                     <div className="max-w-md md:justify-self-end">
                         <p className="text-base leading-7 text-[#6B665E]">
                             A collection of projects, from enterprise systems
@@ -34,22 +23,31 @@ export default function Projects() {
                             problems and explore new ideas.
                         </p>
                     </div>
-                </div>
-
+                </SectionHeading>
                 {/* Reusable project gallery */}
-                <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3">
                     {projects.map((project, index) => (
-                        <ProjectCard
+                        <div
                             key={project.id}
-                            id={project.id}
-                            index={index + 1}
-                            title={project.title}
-                            subtitle={project.subtitle}
-                            category={project.category}
-                            description={project.description}
-                            technologies={project.technologies}
-                            image={project.image}
-                        />
+                            className={
+                                project.featured
+                                    ? "md:col-span-2"
+                                    : "md:col-span-1"
+                            }
+                        >
+                            <ProjectCard
+                                key={project.id}
+                                id={project.id}
+                                index={index + 1}
+                                title={project.title}
+                                subtitle={project.subtitle}
+                                category={project.category}
+                                description={project.description}
+                                technologies={project.technologies}
+                                image={project.image}
+                                featured={project.featured}
+                            />
+                        </div>
                     ))}
                 </div>
             </div>

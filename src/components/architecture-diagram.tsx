@@ -1,6 +1,8 @@
 
 import type { ArchitectureNode } from "@/data/projects";
-
+import { ArrowUpDown } from "lucide-react";
+import { Fragment } from "react";
+import { ArchitectureCard } from "./architecture-card";
 type Props = {
   title: string;
   nodes: ArchitectureNode[];
@@ -10,6 +12,14 @@ export default function ArchitectureDiagram({
   title,
   nodes,
 }: Props) {
+
+  const recommendationNode = nodes.find(
+    (node) => node.id === "engine"
+  );
+
+  const storageNode = nodes.find(
+    (node) => node.id === "storage"
+  );
   return (
     <section className="border-t border-[#C9C1B4] py-16 md:py-24">
       {/* Editorial section heading */}
@@ -31,36 +41,42 @@ export default function ArchitectureDiagram({
       </div>
 
       {/* Architectural module grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {nodes.map((node, index) => (
-          <article
-            key={node.id}
-            className="group flex min-h-56 flex-col justify-between border border-[#C9C1B4] bg-[#E8E1D4] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#AD583B] hover:shadow-lg motion-reduce:transform-none"
-          >
-            {/* Module number */}
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-xs text-[#AD583B]">
-                {String(index + 1).padStart(2, "0")}
-              </span>
+      <div className="space-y-4">
+        {nodes
+          .filter((node) => node.id === "ui" || node.id === "state")
+          .map((node, index) => (
+            <Fragment key={node.id}>
+              <ArchitectureCard node={node} number={index + 1} />
 
-              <span className="h-2 w-2 rounded-full border border-[#AD583B] transition-colors group-hover:bg-[#AD583B]" />
+              <div className="flex justify-center py-3">
+                <ArrowUpDown className="text-[#AD583B]" />
+              </div>
+            </Fragment>
+          ))}
+
+        {/* Two modules side by side */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {recommendationNode && (
+            <ArchitectureCard node={recommendationNode} number={3} />
+          )}
+
+          {storageNode && (
+            <ArchitectureCard node={storageNode} number={4} />
+          )}
+        </div>
+
+        {/* Last module */}
+        {nodes
+          .filter((node) => node.id === "notifications")
+          .map((node) => (
+            <div key={node.id} className="space-y-4">
+              <div className="flex justify-center py-3">
+                <ArrowUpDown className="text-[#AD583B]" />
+              </div>
+
+              <ArchitectureCard node={node} number={5} />
             </div>
-
-            {/* Module information */}
-            <div className="mt-10">
-              <h3 className="font-serif text-2xl leading-tight text-[#1B1B19] md:text-3xl">
-                {node.title}
-              </h3>
-
-              <p className="mt-3 text-sm leading-7 text-[#6B665E]">
-                {node.description}
-              </p>
-            </div>
-
-            {/* Decorative bottom rule */}
-            <div className="mt-8 h-px w-full bg-[#C9C1B4] transition-colors group-hover:bg-[#AD583B]" />
-          </article>
-        ))}
+          ))}
       </div>
 
       {/* Architectural note */}
