@@ -1,7 +1,26 @@
-
+"use client"
+import { useState } from "react"
 import Link from "next/link";
-export default function NavBar() {
+import { Hamburger, X } from "lucide-react";
 
+const navLinks = [
+    {
+        label: "Home", href: "/#home"
+    },
+    {
+        label: "Projects", href: "/#projects"
+    },
+    {
+        label: "About", href: "/#about"
+    },
+    {
+        label: "Experience", href: "/#experience"
+    }
+]
+
+
+export default function NavBar() {
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <header className="border-b border-stone-300">
             <nav
@@ -14,11 +33,27 @@ export default function NavBar() {
                     ER
                 </Link>
                 <div className="hidden items-center gap-8 md:flex">
-                    <Link href={"/#home"}>Home</Link>
-                    <Link href={"/#about"}>About</Link>
-                    <Link href={"/#projects"}>Projects</Link>
-                    <Link href={"/#skills"}>Skills</Link>
+                    {
+                        navLinks.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                            >
+                                {item.label}
+                            </Link>
+                        ))
+                    }
                 </div>
+                <button
+                    type="button"
+                    onClick={() => setIsOpen((previous) => !previous)}
+                    aria-expanded={isOpen}
+                    aria-controls="mobile-menu"
+                    aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+                    className="rounded-md border border-[#C9C1B4] px-4 py-2 text-sm text-[#1B1B19] md:hidden"
+                >
+                    {isOpen ? <X /> : <Hamburger />}
+                </button>
                 {/* Contact button */}
                 <a
                     href="mailto:mmanrusiana@gmail.com"
