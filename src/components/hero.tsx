@@ -130,6 +130,7 @@ export default function Hero() {
 
         {/* Bottom editorial strip */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#C9C1B4] py-6">
+          
           <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#6B665E]">
             Featured / Kompra · Life Queue · Abang PH · E-Sumbong
           </p>

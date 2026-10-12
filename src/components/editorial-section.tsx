@@ -20,6 +20,5 @@ export default function EditorialSection({
                 {secondLabel}
             </span>
         </div>
-
     )
 }

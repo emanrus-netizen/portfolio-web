@@ -1,6 +1,9 @@
+import About from "@/components/about";
+import ExperienceSection from "@/components/experience";
 import Hero from "@/components/hero";
 import Projects from "@/components/projects";
-import Image from "next/image";
+import { experiences } from "@/data/experience";
+
 
 
 export default function Home() {
@@ -8,6 +11,8 @@ export default function Home() {
     <main>
       <Hero />
       <Projects />
+      <About />
+      <ExperienceSection />
     </main>
   );
 }
