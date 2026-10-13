@@ -2,7 +2,7 @@ import About from "@/components/about";
 import ExperienceSection from "@/components/experience";
 import Hero from "@/components/hero";
 import Projects from "@/components/projects";
-import { experiences } from "@/data/experience";
+import Contact from "@/components/contact"
 
 
 
@@ -13,6 +13,7 @@ export default function Home() {
       <Projects />
       <About />
       <ExperienceSection />
+      <Contact />
     </main>
   );
 }
