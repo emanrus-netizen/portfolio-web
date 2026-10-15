@@ -1,8 +1,9 @@
 
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, useRef } from "react";
 import EditorialSection from "./editorial-section";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 // Defines the structure of our contact form data.
 type ContactForm = {
@@ -20,9 +21,13 @@ export default function Contact() {
     });
 
     // Store validation feedback.
+    const [website, setWebsite] = useState("");
     const [error, setError] = useState("");
     const [isValid, setIsValid] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
+    const turnstileRef = useRef<TurnstileInstance>(null);
     /**
      * Update any form field.
      *
@@ -79,7 +84,10 @@ export default function Contact() {
             setError("Please enter a valid email address.");
             return;
         }
-
+        if (!turnstileToken) {
+            setError("Please complete security verification.");
+            return;
+        }
         // Inform React that a request is starting.
         setIsSubmitting(true);
 
@@ -95,6 +103,8 @@ export default function Contact() {
                     name: form.name.trim(),
                     email: form.email.trim(),
                     message: form.message.trim(),
+                    website,
+                    turnstileToken
                 }),
             });
 
@@ -107,11 +117,16 @@ export default function Contact() {
             // backend rejected the request.
             if (!response.ok || result.success !== true) {
                 setError(
-                    result.message ?? "Unable to validate your message."
+                    result.message ?? "Unable to send your message."
                 );
                 return;
             }
-
+            // Clear the form after successful submission.
+            setForm({
+                name: "",
+                email: "",
+                message: "",
+            });
             // Backend accepted and validated the data.
             // No email has been delivered yet.
             setIsValid(true);
@@ -125,7 +140,10 @@ export default function Contact() {
         } finally {
             // Runs whether the request succeeds or fails.
             setIsSubmitting(false);
+            setTurnstileToken(null);
+            turnstileRef.current?.reset();
         }
+
     }
 
 
@@ -172,7 +190,26 @@ export default function Contact() {
                         noValidate
                         className="flex flex-col gap-8 md:col-span-6"
                     >
+                        <div
+                            className="absolute -left-[9999px] h-px w-px overflow-hidden"
+                            aria-hidden={true}
+                        >
+                            <label htmlFor="contact-website">
+                                Website (leave blank)
+                            </label>
 
+                            <input
+                                id="contact-website"
+                                name="website"
+                                type="text"
+                                value={website}
+                                onChange={(event) => {
+                                    setWebsite(event.target.value)
+                                }}
+                                tabIndex={1}
+                                autoComplete="off"
+                            />
+                        </div>
                         {/* NAME */}
                         <div className="flex flex-col gap-3">
                             <label
@@ -242,6 +279,33 @@ export default function Contact() {
                                 }
                                 className="w-full resize-y border-b border-[#C9C1B4] bg-transparent py-3 text-base text-[#1B1B19] outline-none transition-colors placeholder:text-[#9C9285] focus:border-[#AD583B] focus-visible:ring-2 focus-visible:ring-[#AD583B]/20"
                             />
+                            {/* Cloudflare Turnstile */}
+                            <div className="flex flex-col gap-3">
+                                <p className="text-xs font-semibold uppercase tracking-widest text-[#514A40]">
+                                    Security Verification
+                                </p>
+
+                                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                                    <Turnstile
+                                        ref={turnstileRef}
+                                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                                        options={{
+                                            theme: "light",
+                                        }}
+                                        onSuccess={(token) => {
+                                            setTurnstileToken(token);
+                                            setError("");
+                                        }}
+                                        onExpire={() => {
+                                            setTurnstileToken(null)
+                                        }}
+                                        onError={() => {
+                                            setTurnstileToken(null);
+                                            setError("Security verification failed.");
+                                        }}
+                                    />
+                                )}
+                            </div>
                         </div>
 
                         {/* ERROR FEEDBACK */}
@@ -256,9 +320,9 @@ export default function Contact() {
 
                         {/* VALIDATION FEEDBACK */}
                         {isValid && (
-                            <p role="status" className="text-sm text-[#514A40]">
-                                Server validation passed.
-                                Email delivery is not configured yet.
+                            <p role="status" className="text-sm  text-green-800">
+                                Your message was accepted for delivery.
+                                Thank you for reaching out!
                             </p>
                         )}
                         {/* SUBMIT BUTTON */}
