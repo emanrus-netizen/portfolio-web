@@ -7,11 +7,16 @@ export type Project = {
     technologies: string[];
     image?: string;
     featured?: boolean
-
+    webLink?: string;
     // Detailed case-study information
     overview?: string;
     problem?: string;
     solution?: string;
+    screenshots?: {
+        src: string;
+        alt: string;
+        caption?: string;
+    }[];
 
     contributions?: string[];
     challenges?: string[];
@@ -52,7 +57,15 @@ export const projects: Project[] = [
             "Redis",
         ],
         featured: true,
-        overview:   
+        webLink: "https://kompra.ph/",
+        image: "/projects/kompra-homepage.webp",
+        screenshots: [{
+            src: "/projects/kompra-homepage.webp",
+            alt: "Kompra wholesale storefront",
+            caption: "Wholesale storefront",
+        }],
+
+        overview:
             "Kompra is a business management ecosystem designed to connect retail operations, inventory management, supplier procurement, and wholesale commerce.",
 
         problem:
@@ -206,6 +219,13 @@ export const projects: Project[] = [
         title: "Abang PH",
         subtitle: "Rental Management Made Simple",
         category: "Web Application",
+        image: "/projects/abang-homepage.webp",
+        screenshots: [
+            { src: "/projects/abang-homepage.webp", alt: "Abang PH landing page", caption: "Landing page" },
+            { src: "/projects/abang-dashboard.webp", alt: "Abang PH demo landlord dashboard", caption: "Rental dashboard" },
+        ],
+
+
         description:
             "A rental management application designed to help landlords organize properties, tenants, rental payments, and everyday operations.",
         technologies: [
@@ -215,7 +235,7 @@ export const projects: Project[] = [
             "PostgreSQL",
             "Tailwind CSS",
         ],
-
+        webLink: "https://abang-ph.vercel.app/",
         overview:
             "Abang PH is a rental and property management web application designed for small landlords, boarding house operators, and property owners in the Philippines. It aims to simplify everyday rental operations by organizing properties, rentable spaces, tenants, rental payments, and financial records within a centralized system.",
 
@@ -280,7 +300,14 @@ export const projects: Project[] = [
             "Applied JavaScript concepts to connect user actions with application behavior.",
             "Practiced organizing frontend code into maintainable application functionality.",
         ],
+        webLink: "https://esumbong-2025.vercel.app/",
 
+        image: "/projects/esumbong-homepage.webp",
+        screenshots: [{
+            src: "/projects/esumbong-homepage.webp",
+            alt: "E-Sumbong community reporting homepage",
+            caption: "Community reporting homepage",
+        }],
         challenges: [
             "Designing a reporting interface that users can navigate and understand easily.",
             "Organizing report-related information into a consistent application structure.",
@@ -288,7 +315,7 @@ export const projects: Project[] = [
             "Maintaining readable code while implementing multiple interface features.",
         ],
         featured: true,
-        
+
         learnings: [
             "How JavaScript can be used to implement interactive web application functionality.",
             "The importance of clear user interfaces when collecting structured information.",

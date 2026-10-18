@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Project } from "@/data/projects";
 import EngineeringSection from "./engineering-section";
 import ArchitectureDiagram from "./architecture-diagram";
+import ProjectGallery from "./project-gallery";
 
 type ProjectCaseStudyProps = {
     project: Project;
@@ -42,20 +43,32 @@ export default function ProjectCaseStudy({
                     <p className="mt-6 max-w-2xl text-base leading-8 text-[#6B665E]">
                         {project.description}
                     </p>
+
+                    {/* Project website */}
+                    {project.webLink && (
+                        <div className="mt-10">
+                            <a
+                                href={project.webLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group inline-flex items-center gap-4 rounded-sm bg-[#1B1B19] px-6 py-4 text-sm font-medium text-[#F2EDE2] transition-colors duration-200 hover:bg-[#AD583B] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AD583B]"
+                            >
+                                Visit Live Website
+
+                                <span
+                                    aria-hidden="true"
+                                    className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:transform-none"
+                                >
+                                    ↗
+                                </span>
+                            </a>
+                        </div>
+                    )}
+
                 </header>
 
                 {/* Featured project image */}
-                {project.image && (
-                    <div className="relative mt-12 aspect-video overflow-hidden bg-[#E8E1D4]">
-                        <Image
-                            src={project.image}
-                            alt={`${project.title} application screenshot`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 90vw"
-                            className="object-cover"
-                        />
-                    </div>
-                )}
+                <ProjectGallery project={project} />
 
                 {/* Project details */}
                 <div className="grid gap-8 border-b border-[#C9C1B4] py-10 md:grid-cols-3">
